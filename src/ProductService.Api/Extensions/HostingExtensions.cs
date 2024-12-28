@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Amazon.S3;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using ProductService.Application.Mappers;
 using ProductService.Common.CQRS;
@@ -26,6 +27,8 @@ internal static class HostingExtensions
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
         builder.Services.AddExceptionHandler<ProductNotFoundExceptionHandler>();
         builder.Services.AddProblemDetails();
+        builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+        builder.Services.AddAWSService<IAmazonS3>();
 
         return builder.Build();
     }
